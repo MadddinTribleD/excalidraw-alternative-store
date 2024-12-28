@@ -66,4 +66,14 @@ app.post('/api/v2/post/', async (req: Request, res: Response) => {
   }
 })
 
+app.post('/api/v2/post/:key', async (req: Request, res: Response) => {
+  try {
+    const key = <string>req.params.key
+    await storage.set(key, req, res)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Could not upload the data.' })
+  }
+});
+
 app.listen(PORT, () => console.log(`Listening to http://0.0.0.0:${PORT}`))
